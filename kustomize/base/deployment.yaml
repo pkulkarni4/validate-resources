@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-validation-webhook
+  labels:
+    app: resource-validation-webhook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resource-validation-webhook
+  template:
+    metadata:
+      labels:
+        app: resource-validation-webhook
+    spec:
+      serviceAccountName: resource-validation-webhook
+      containers:
+      - name: server
+        #image: sfhcm.docker.repositories.sap.ondemand.com/resource-validation-webhook:latest
+        image: pkulkarni4/admission-webhook:v5
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8443
+          name: webhook-api
+        envFrom:
+        - configMapRef:
+            name: resource-governance-limit-config
+        volumeMounts:
+        - name: resource-validation-webhook-tls-certs
+          mountPath: /run/secrets/tls
+          readOnly: true
+      #imagePullSecrets:
+      #- name: sfhcmartifactory
+      volumes:
+      - name: resource-validation-webhook-tls-certs
+        secret:
+          secretName: resource-validation-webhook-tls

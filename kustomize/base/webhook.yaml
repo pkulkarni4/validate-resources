@@ -1,0 +1,24 @@
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: resource-validation-webhook
+webhooks:
+  - name: resource-validation-webhook.resourcegovernance.svc
+    namespaceSelector:
+      matchExpressions:
+      - key: openpolicyagent.org/webhook
+        operator: NotIn
+        values:
+        - ignore        
+    clientConfig:
+      service:
+        name: resource-validation-webhook
+        namespace: resourcegovernance
+        path: "/validate"
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tDQpNSUlEWFRDQ0FrV2dBd0lCQWdJVVIyMlRZWGZQaHdsaTVOTGY4di9Fa3dqczZ0RXdEUVlKS29aSWh2Y05BUUVMDQpCUUF3UFRFN01Ea0dBMVVFQXd3eWNtVnpiM1Z5WTJVdGRtRnNhV1JoZEdsdmJpMTNaV0pvYjI5ckxuSmxjMjkxDQpjbU5sWjI5MlpYSnVZVzVqWlM1emRtTXdJQmNOTWpBeE1UQTBNVFl6T0RBMFdoZ1BNakk1TkRBNE1qQXhOak00DQpNRFJhTUQweE96QTVCZ05WQkFNTU1uSmxjMjkxY21ObExYWmhiR2xrWVhScGIyNHRkMlZpYUc5dmF5NXlaWE52DQpkWEpqWldkdmRtVnlibUZ1WTJVdWMzWmpNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDDQpBUUVBcjVWYzE2aUhXWlhxY09sZlpUNzNWQTZ0VTI4YjVSUFh2bDAzSnhxSGd0dS9kY0ZWOWhLT3ViaEd5ejdNDQplNmYvT01NZWl0VUQ1S1hWUU1mb1NTb0trM3lCaWhXeFZBajNTL3FLMVpEaXNBTGFEMDJreU9rYlJXM29nSklUDQpydm13dm5LTG5xamlyQ2RWTWpWNi9ndEdaS1V5Smk0NkFnQjdVUnVhNGd2aCs1UGpnS1R2SFZ4eDV6aVd3TFRjDQpMZnk5OGk1S1VPT2huOVdrbXhqK09OcStTVVZ5UUw2b1pGYmkycmQyZFJxYXFXUWtreGswMzk4Yjl3RWx2b3NFDQozZVkwMlNvK3dBR21UR2x1SGtnVDZ1L05FRjk4aTZqK3NJcFRIRS9yd3RFeGMvWDg4N25IN1JnODdGS3lKWUc0DQpyeE8vUithRGhhNC85V2xRWEdZSitNWmZkUUlEQVFBQm8xTXdVVEFkQmdOVkhRNEVGZ1FVb0xiZms1Rit0ck1kDQppWEJyQThKYzRRVGJLazB3SHdZRFZSMGpCQmd3Rm9BVW9MYmZrNUYrdHJNZGlYQnJBOEpjNFFUYktrMHdEd1lEDQpWUjBUQVFIL0JBVXdBd0VCL3pBTkJna3Foa2lHOXcwQkFRc0ZBQU9DQVFFQVU4UTBLUnk5N3R4U2dBWDZQOVFYDQpkaUdsWGRoQXpwaUM3dVEvZjVXcGJGYmI4bllDSXk4TC83SzVHdklkTi9iNkU4ZHlNc2Y3eXZvcTdYMllRTmIwDQpvSEE3SmJ1SlRUQTNMV1B3SEwrVGFFVUZ5KzVnTVJEMmtGdlcyaWdWclNNa09OU21aMGVFU1NPVGpmUENiVUNPDQpKcldONTQyb0RWOW02UjZNMDBmbCt2RFBrV21qRTZDcEdRQlA4YkdWUURKMDh5N1hhN0JEUXJkWTc0UDVXbGZTDQpGUmFDK3p5S0hPeEFJUlJncmRRMFJvbFMwRjQzTFN6NFM4bmQ3ZUNESUllWEMvb0ZMVTNWQXl5dzhQVG1xZkF2DQpwYmVKSEpDZmd3RTAwT1BDUkZTZTdFNTIvUGpUZFcxMUQwRGFxSTZGVmFVZTRCcUlmYTgvUElmS3hiNEVHK0dNDQptZz09DQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tDQo=
+    rules:
+      - operations: [ "CREATE", "UPDATE" ]
+        apiGroups: [ "apps" ]
+        apiVersions: [ "v1" ]
+        resources: [ "deployments" ]
+    timeoutSeconds: 30

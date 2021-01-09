@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resource-validation-webhook
+  template:
+    metadata:
+      labels:
+        app: resource-validation-webhook
+      annotations:
+        microserviceName: "XYZ"
+        microserviceSize: "S"
+    spec:
+      containers:
+      - name: webapp1
+        image: nginx
+        resources:
+          requests:
+            cpu: "1"
+            memory: "400Mi"

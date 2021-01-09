@@ -1,0 +1,8 @@
+bases:
+- ../../base
+
+patchesStrategicMerge:
+- webhook.yaml
+- deployment.yaml
+
+namespace: resourcegovernance

@@ -1,0 +1,15 @@
+commonLabels:
+  app: resource-validation-webhook
+
+configMapGenerator:
+ - name: resource-governance-limit-config
+   env: resources_threshold.properties
+generatorOptions:
+  disableNameSuffixHash: true
+   
+resources:
+  - service-account.yaml
+  - roles.yaml
+  - deployment.yaml
+  - service.yaml
+  - webhook.yaml

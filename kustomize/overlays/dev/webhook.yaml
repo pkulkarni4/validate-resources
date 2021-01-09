@@ -1,0 +1,9 @@
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: resource-validation-webhook
+webhooks:
+  - name: resource-validation-webhook.resourcegovernance.svc
+    clientConfig:
+      service:
+        namespace: resourcegovernance
